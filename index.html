@@ -4,6 +4,26 @@
         <title>Launch Checklist</title>
         <link rel = "stylesheet" type = "text/css" href = "styles.css" />
         <script src = "script.js"></script>
+        <script>
+            window.addEventListener("load", function() {
+               fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+                response.json().then( function(json) {
+                  const div = document.getElementById("missionTarget");
+                  div.innerHTML = `
+                  <h2>Mission Destination</h2>
+                    <ol>
+                        <li>Name: ${json[0].name}</li>
+                        <li>Diameter: ${json[0].diameter}</li>
+                        <li>Star: ${json[0].star}</li>
+                        <li>Distance from Earth: ${json[0].distance}</li>
+                        <li>Number of Moons: ${json[0].moons}</li>
+                    </ol>
+                    <img src="${json[0].image}">
+                  `;
+               })               
+            });
+            });
+         </script>
     </head>
     <body>
         <h1>Launch Checklist Form</h1>
@@ -19,24 +39,15 @@
                     <label>Co-pilot Name <input type="text" name="copilotName"/></label>
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Fuel Level (L) <input type="text" name="fuelLevel"/></label> 
+                    <label>Fuel Level (L) <input type="number" name="fuelLevel"/></label> 
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Cargo Mass (kg) <input type="text" name="cargoMass"/></label>
+                    <label>Cargo Mass (kg) <input type="number" name="cargoMass"/></label>
                 </div>
-                <button id="formSubmit">Submit</button>
             </form>
+            <button id="formSubmit">Submit</button>
         </div>
         <div id="launchStatusCheck">
-            <h2 id="launchStatus">Awaiting Information Before Launch</h2>
-            <div  id="faultyItems">
-                <ol>
-                    <li id="pilotStatus">Pilot Ready</li>
-                    <li id="copilotStatus">Co-pilot Ready</li>
-                    <li id="fuelStatus">Fuel level high enough for launch</li>
-                    <li id="cargoStatus">Cargo mass low enough for launch</li>
-                </ol>
-            </div>
         </div>    
     </body>
 </html>
